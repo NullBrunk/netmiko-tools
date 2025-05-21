@@ -48,3 +48,5 @@ def main():
 			get_result()
 		else:
 			continue
+
+main()
