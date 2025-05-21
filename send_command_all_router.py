@@ -2,40 +2,49 @@
 
 from netmiko import ConnectHandler
 from termcolor import colored
-from sys import argv
 
-DNS = {"PE1": "10.50.50.252", "PE2": "10.50.50.253", "PE3": "10.3.3.1", "P1": "10.99.99.2", "P2": "10.99.99.14"}
 USERNAME = "aaa_user"
 PASSWORD = "root"
+													      # Le SSH vers PE3, P1 et P2 marche plus donc pour l'instant ils sont punis ...	
+ROUTERS = {"PE1": "10.50.50.252", "PE2": "10.50.50.253",} # "PE3": "10.3.3.1", "P1": "10.99.99.2", "P2": "10.99.99.14"}
+SESSIONS = {}
 
-def main(hostname: str, iface: str, state: str) -> None:
+PROMPT = f"{colored("ROUTERS(", "white", attrs=["bold"])}{",".join(router for router in ROUTERS)}{colored(")", "white", attrs=["bold"])}# "
+for router in ROUTERS:
+	SESSIONS[router] = ConnectHandler(device_type="cisco_ios", host=ROUTERS[router], username=USERNAME, password=PASSWORD)
 
-	router_ip = DNS[hostname.upper()]
-	cfg_set = [
-		f"interface {iface}",
-		"no sh" if(state == "on") else "sh"
-	]
+def configure():
+	#toddeveovec
+	# on verra un de ces 4
+	return
 
-	print(f"{colored('[*]', 'cyan')} Switching {state} {iface} on {hostname}\n")
+def get_result():
+	command = input(PROMPT)
 
-	# On se co en SSH en utilisant les creds RADIUS
-	net_connect = ConnectHandler(device_type="cisco_ios", host=router_ip, username=USERNAME, password=PASSWORD)
+	for router in SESSIONS:
+		print(colored(f"> {router}", "cyan", attrs=["bold"]))
+		session = SESSIONS[router]
+		res = session.send_command(command)
+		print(res)
+def main():
+	while True:
+		print(f"""
+		{colored("What do you want to do ?", "white", attrs=["bold"])}
+		{colored("1>", "cyan", attrs=["bold"])} {colored("Send configs", "white")}
+		{colored("2>", "cyan", attrs=["bold"])} {colored("Get command result", "white")}
 
+		> """, end="")
 
-	# On se enablise, on envoie la commande et on log le retour
-	net_connect.enable()
-	print(net_connect.send_config_set(cfg_set))
+		todo = input()
 
+		try:
+			todo = int(todo)
+		except:
+			continue
 
-if __name__ == "__main__":
-	if(argv[1] and argv[1] in ["-h", "--help", "help", "h"]):
-		print(f"{colored('[*]', 'cyan')} Usage: {argv[0]} (HOSTNAME) (IFACE) (on|off)")
-		print(f"{colored('[i]', 'green')} Example: {argv[0]} PE1 e0/0 off")
-		quit()
-
-
-	if(len(argv) < 4):
-		print(f"{colored('[!]', 'red')} Usage: {argv[0]} (HOSTNAME) (IFACE) (on|off)\n")
-		quit()
-
-	main(argv[1], argv[2], argv[3])
+		if(todo == 1):
+			configure()
+		elif(todo == 2):
+			get_result()
+		else:
+			continue
