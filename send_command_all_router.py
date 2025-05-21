@@ -7,14 +7,13 @@ USERNAME = "aaa_user"
 PASSWORD = "root"
 													      # Le SSH vers PE3, P1 et P2 marche plus donc pour l'instant ils sont punis ...	
 ROUTERS = {"PE1": "10.50.50.252", "PE2": "10.50.50.253",} # "PE3": "10.3.3.1", "P1": "10.99.99.2", "P2": "10.99.99.14"}
+ROUTERS_JOINED = ",".join(router for router in ROUTERS)
+
+PROMPT = f"""{colored("ROUTERS(", "white", attrs=["bold"])}{ROUTERS_JOINED}{colored(")", "white", attrs=["bold"])}# """
 SESSIONS = {}
 
-PROMPT = f"""{colored("ROUTERS(", "white", attrs=["bold"])}{",".join(router for router in ROUTERS)}{colored(")", "white", attrs=["bold"])}# """
-for router in ROUTERS:
-	SESSIONS[router] = ConnectHandler(device_type="cisco_ios", host=ROUTERS[router], username=USERNAME, password=PASSWORD)
 
 def configure():
-	#toddeveovec
 	# on verra un de ces 4
 	return
 
@@ -29,6 +28,7 @@ def get_result():
 			session = SESSIONS[router]
 			res = session.send_command(command)
 			print(res)
+
 def main():
 	while True:
 		print(f"""
@@ -53,4 +53,9 @@ def main():
 			continue
 
 if __name__ == "__main__":
+	print(f"{colored("[*]", "cyan", attrs=["bold"])} Initializing SSH session for all {ROUTERS_JOINED}")
+	for router in ROUTERS:
+		SESSIONS[router] = ConnectHandler(device_type="cisco_ios", host=ROUTERS[router], username=USERNAME, password=PASSWORD)
+	print(f"{colored("[+]", "green", attrs=["bold"])} Done")
+
 	main()
