@@ -53,9 +53,9 @@ def main():
 			continue
 
 if __name__ == "__main__":
-	print(f"{colored("[*]", "cyan", attrs=["bold"])} Initializing SSH session for all {ROUTERS_JOINED}")
+	print(f"""{colored("[*]", "cyan", attrs=["bold"])} Initializing SSH session for all {ROUTERS_JOINED}""")
 	for router in ROUTERS:
 		SESSIONS[router] = ConnectHandler(device_type="cisco_ios", host=ROUTERS[router], username=USERNAME, password=PASSWORD)
-	print(f"{colored("[+]", "green", attrs=["bold"])} Done")
+	print(f"""{colored("[+]", "green", attrs=["bold"])} Done""")
 
 	main()
