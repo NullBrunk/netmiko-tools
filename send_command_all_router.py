@@ -5,8 +5,8 @@ from termcolor import colored
 
 USERNAME = "aaa_user"
 PASSWORD = "root"
-													      # Le SSH vers PE3, P1 et P2 marche plus donc pour l'instant ils sont punis ...	
-ROUTERS = {"PE1": "10.50.50.252", "PE2": "10.50.50.253",} # "PE3": "10.3.3.1", "P1": "10.99.99.2", "P2": "10.99.99.14"}
+													      # Le SSH vers P1 et P2 marche plus depuis qu'on a mis en place les VRF	
+ROUTERS = {"PE1": "10.50.50.252", "PE2": "10.50.50.253", "PE3": "10.3.3.1"} #, "P1": "10.99.99.2", "P2": "10.99.99.14"}
 ROUTERS_JOINED = ",".join(router for router in ROUTERS)
 
 PROMPT = f"""{colored("ROUTERS(", "white", attrs=["bold"])}{ROUTERS_JOINED}{colored(")", "white", attrs=["bold"])}# """
@@ -38,8 +38,11 @@ def main():
 
 > """, end="")
 
-		todo = input()
-
+		try:
+			todo = input()
+		except:
+			print(f"{colored('[!]', 'yellow', attrs=['bold'])} Received SIGKILL, exiting ...")
+			quit()
 		try:
 			todo = int(todo)
 		except:
@@ -53,7 +56,7 @@ def main():
 			continue
 
 if __name__ == "__main__":
-	print(f"""{colored("[*]", "cyan", attrs=["bold"])} Initializing SSH session for all {ROUTERS_JOINED}""")
+	print(f"""{colored("[*]", "cyan", attrs=["bold"])} Initializing SSH session for {ROUTERS_JOINED}""")
 	for router in ROUTERS:
 		SESSIONS[router] = ConnectHandler(device_type="cisco_ios", host=ROUTERS[router], username=USERNAME, password=PASSWORD)
 	print(f"""{colored("[+]", "green", attrs=["bold"])} Done""")
