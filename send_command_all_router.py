@@ -21,6 +21,9 @@ def get_result() -> None:
 		if command in ["exit", "quit", "end", "next"]:
 			return
 		
+		if(command.strip() == ""):
+			continue
+		
 		for router in SESSIONS:
 			print(colored(f"> {router}", "cyan", attrs=["bold"]))
 			session = SESSIONS[router]
