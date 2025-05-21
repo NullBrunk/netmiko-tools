@@ -14,8 +14,7 @@ SESSIONS = {}
 
 
 def configure():
-	# on verra un de ces 4
-	return
+	print("Not available")
 
 def get_result():
 	while True:
@@ -41,7 +40,7 @@ def main():
 		try:
 			todo = input()
 		except:
-			print(f"{colored('[!]', 'yellow', attrs=['bold'])} Received SIGKILL, exiting ...")
+			print(f"\n{colored('[!]', 'yellow', attrs=['bold'])} Received SIGKILL, exiting ...")
 			quit()
 		try:
 			todo = int(todo)
