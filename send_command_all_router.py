@@ -9,7 +9,7 @@ PASSWORD = "root"
 ROUTERS = {"PE1": "10.50.50.252", "PE2": "10.50.50.253",} # "PE3": "10.3.3.1", "P1": "10.99.99.2", "P2": "10.99.99.14"}
 SESSIONS = {}
 
-PROMPT = f"{colored("ROUTERS(", "white", attrs=["bold"])}{",".join(router for router in ROUTERS)}{colored(")", "white", attrs=["bold"])}# "
+PROMPT = f"""{colored("ROUTERS(", "white", attrs=["bold"])}{",".join(router for router in ROUTERS)}{colored(")", "white", attrs=["bold"])}# """
 for router in ROUTERS:
 	SESSIONS[router] = ConnectHandler(device_type="cisco_ios", host=ROUTERS[router], username=USERNAME, password=PASSWORD)
 
