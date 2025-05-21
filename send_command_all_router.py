@@ -3,20 +3,19 @@
 from netmiko import ConnectHandler
 from termcolor import colored
 
-USERNAME = "aaa_user"
-PASSWORD = "root"
-													      # Le SSH vers P1 et P2 marche plus depuis qu'on a mis en place les VRF	
-ROUTERS = {"PE1": "10.50.50.252", "PE2": "10.50.50.253", "PE3": "10.3.3.1"} #, "P1": "10.99.99.2", "P2": "10.99.99.14"}
-ROUTERS_JOINED = ",".join(router for router in ROUTERS)
+USERNAME: str = "aaa_user"
+PASSWORD: str = "root"
 
-PROMPT = f"""{colored("ROUTERS(", "white", attrs=["bold"])}{ROUTERS_JOINED}{colored(")", "white", attrs=["bold"])}# """
-SESSIONS = {}
+ROUTERS: dict = {"PE1": "10.50.50.252", "PE2": "10.50.50.253", "PE3": "10.3.3.1"} 
+ROUTERS_JOINED: str = ",".join(router for router in ROUTERS)
 
+PROMPT: str = f"""{colored("ROUTERS(", "white", attrs=["bold"])}{ROUTERS_JOINED}{colored(")", "white", attrs=["bold"])}# """
+SESSIONS: dict = {}
 
-def configure():
+def configure() -> None:
 	print("Not available")
 
-def get_result():
+def get_result() -> None:
 	while True:
 		command = input(PROMPT)
 		if command in ["exit", "quit", "end", "next"]:
@@ -27,8 +26,8 @@ def get_result():
 			session = SESSIONS[router]
 			res = session.send_command(command)
 			print(res)
-
-def main():
+		
+def main() -> None:
 	while True:
 		print(f"""
 {colored("What do you want to do ?", "white", attrs=["bold"])}
@@ -38,12 +37,12 @@ def main():
 > """, end="")
 
 		try:
-			todo = input()
+			todo: str = input()
 		except:
 			print(f"\n{colored('[!]', 'yellow', attrs=['bold'])} Received SIGKILL, exiting ...")
 			quit()
 		try:
-			todo = int(todo)
+			todo: int = int(todo)
 		except:
 			continue
 
