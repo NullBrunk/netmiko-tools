@@ -19,21 +19,24 @@ def configure():
 	return
 
 def get_result():
-	command = input(PROMPT)
-
-	for router in SESSIONS:
-		print(colored(f"> {router}", "cyan", attrs=["bold"]))
-		session = SESSIONS[router]
-		res = session.send_command(command)
-		print(res)
+	while True:
+		command = input(PROMPT)
+		if command in ["exit", "quit", "end", "next"]:
+			return
+		
+		for router in SESSIONS:
+			print(colored(f"> {router}", "cyan", attrs=["bold"]))
+			session = SESSIONS[router]
+			res = session.send_command(command)
+			print(res)
 def main():
 	while True:
 		print(f"""
-		{colored("What do you want to do ?", "white", attrs=["bold"])}
-		{colored("1>", "cyan", attrs=["bold"])} {colored("Send configs", "white")}
-		{colored("2>", "cyan", attrs=["bold"])} {colored("Get command result", "white")}
+{colored("What do you want to do ?", "white", attrs=["bold"])}
+{colored("1>", "cyan", attrs=["bold"])} {colored("Send configs", "white")}
+{colored("2>", "cyan", attrs=["bold"])} {colored("Get command result", "white")}
 
-		> """, end="")
+> """, end="")
 
 		todo = input()
 
@@ -49,4 +52,5 @@ def main():
 		else:
 			continue
 
-main()
+if __name__ == "__main__":
+	main()
