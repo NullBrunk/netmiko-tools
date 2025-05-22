@@ -2,9 +2,8 @@
 
 from modules.interfaces import get_info as show_interfaces, toggle as toggle_interfaces
 from modules.debug import success, info, error, presentation
-from netmiko import ConnectHandler
 from termcolor import colored
-from modules.consts import *
+from modules.consts import ROUTERS, ROUTERS_STRING
 import argparse
 
 

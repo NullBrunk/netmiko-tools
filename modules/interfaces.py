@@ -1,3 +1,7 @@
+from modules.consts import USERNAME, PASSWORD
+from netmiko import ConnectHandler
+
+
 def get_info(router: str, iface: str) -> None:
 
 	# executer "sh ip int br" si aucune interface a été passée en CLI, 
