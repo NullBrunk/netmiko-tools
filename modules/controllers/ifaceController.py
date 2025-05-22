@@ -8,7 +8,7 @@ class ifaceController:
 		self.session = session
 		pass
 
-	def get_brief(self, router: str):
+	def get_brief(self):
 		parsed = ifaceParser.parse_brief(
 			self.session.send_command("sh ip int br")
 		)
