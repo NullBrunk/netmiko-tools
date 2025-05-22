@@ -4,17 +4,16 @@ from netmiko import ConnectHandler
 from modules.ui.debug import info, success
 from termcolor import colored
 
-def get_info(router: str, iface: str):
+def get_info(router: str):
 
-	# executer "sh ip int br" si aucune interface a été passée en CLI, 
-	# sinon executer sh ip int <l'interface>
-	command = "sh ip int " + ( iface if(iface) else "br" )
+	# executer "sh ip int br" 
+	command = "sh ip int br"
 
 	# On se co en SSH en utilisant les creds RADIUS
 	net_connect = ConnectHandler(device_type="cisco_ios", host=router, username=USERNAME, password=PASSWORD)
 	result = net_connect.send_command(command)
 
-	result = parse_interface_brief()
+	result = parse_interface_brief(result=result)
 	return net_connect, result
 
 

@@ -45,8 +45,9 @@ def main(args):
 
         else:
             success(f'Executing "{colored(f"sh ip int {interface}", "white", attrs=["bold"])} on "{colored(hostname, "white", attrs=["bold"])}"\n')
-            res = show_interfaces(router=ip, iface=interface)
-            print(res[1])
+            # TODO: rewrite the mono int show thing
+            #res = show_interfaces(router=ip, iface=interface)
+            #print(res[1])
     
     else:
         error("Nothing to do !")
