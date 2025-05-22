@@ -2,14 +2,16 @@
 
 from modules.interfaces import get_info as show_interfaces, toggle as toggle_interfaces
 from modules.debug import success, info, error, presentation
+from modules.ui.date_calculator import date_calculator
+
 from termcolor import colored
 from modules.consts import ROUTERS, ROUTERS_STRING
 from time import strftime
 import argparse
 
+start = strftime("%H:%M:%S")
 
 def main(args):
-    info(f'Launching script at {colored(strftime("%H:%M:%S"), "white", attrs=["bold"])}')
     hostname = args.hostname
     backup = args.backup
     show_all = args.show_all
@@ -45,7 +47,7 @@ def main(args):
         error("Nothing to do !")
 
 
-    info(f'Ending script at {colored(strftime("%H:%M:%S"), "white", attrs=["bold"])}', start="\n")
+    info(f'Ending script at {colored(strftime("%H:%M:%S"), "white", attrs=["bold"])} took {colored(date_calculator(start, strftime("%H:%M:%S")), "white", attrs=["bold"])}', start="\n")
     
     
     
