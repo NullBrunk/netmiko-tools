@@ -22,6 +22,6 @@ def date_calculator(starting, ending):
     if(seconds != 0):
         to_ret += f"{seconds:02} seconds"
 
-    if(to_ret = ""):
+    if(to_ret == ""):
         to_ret = "0 second"
     return to_ret
