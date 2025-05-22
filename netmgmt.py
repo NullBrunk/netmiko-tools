@@ -9,6 +9,8 @@ from modules.consts import ROUTERS, ROUTERS_STRING
 from time import strftime
 import argparse
 
+INTERACTIVE = None
+
 start = strftime("%H:%M:%S")
 
 def main(args):
@@ -31,6 +33,8 @@ def main(args):
     elif(show_interface):
         info(f'Executing "{colored("sh ip int br", "white", attrs=["bold"])} on "{colored(hostname, "white", attrs=["bold"])}"\n')
         res = show_interfaces(router=ip, iface="")
+        global INTERACTIVE
+        INTERACTIVE = res[1]
         print(res[1])
 
     elif(interface != None):
