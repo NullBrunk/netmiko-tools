@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
-from modules.interfaces import get_info as show_interfaces, toggle as toggle_interfaces
-from modules.ui.display_interfaces import display_interfaces_dataframe
+from modules.controllers.interfaces import show as show_iface, toggle as toggle_iface
 from modules.ui.debug import success, info, error, presentation
-from modules.ui.date_calculator import date_calculator
+from modules.ui.interfaces import show_dataframe
+from modules.ui.datetime import date_calculator
 
 from termcolor import colored
 from modules.consts import ROUTERS, ROUTERS_STRING
@@ -32,14 +32,14 @@ def main(args):
         backup()
 
     elif(show_interface):
-        res = show_interfaces(router=ip)
+        res = show_iface(router=ip)
         df = res[1]
 
-        display_interfaces_dataframe(df)
+        show_dataframe(df)
 
     elif(interface != None):
         if(toggle):
-            res = toggle_interfaces(router=ip, iface=interface)
+            res = toggle_iface(router=ip, iface=interface)
             print(res[1])
 
         else:

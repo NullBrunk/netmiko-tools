@@ -1,7 +1,7 @@
 from modules.ui.debug import presentation
 from termcolor import colored
 
-def display_interfaces_dataframe(df):
+def show_dataframe(df):
     # On recupere les interfaces qui ont une ip
     up_interfaces = df[df["status"] == "up"]
     # On recupere les interfaces qui ont pas d'ip
