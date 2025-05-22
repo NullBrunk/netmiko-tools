@@ -16,11 +16,15 @@ def date_calculator(starting, ending):
 
     to_ret = ""
     if(hours != 0):
-        to_ret += f"{hours:02} hours "
+        to_ret += f"{hours:02} hour{'' if hours == 1 else 's'} "
     if(minutes != 0):
-        to_ret += f"{minutes:02} minutes "
+        if(hours == 0 and minutes < 10):
+            to_ret += "0"
+        to_ret += f"{seconds} minute{'' if minutes == 1 else 's'} "
     if(seconds != 0):
-        to_ret += f"{seconds:02} seconds"
+        if(hours == 0 and minutes == 0 and seconds < 10):
+            to_ret += "0"
+        to_ret += f"{seconds} second{'' if seconds == 1 else 's'}"
 
     if(to_ret == ""):
         to_ret = "0 second"
