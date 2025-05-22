@@ -26,15 +26,18 @@ def main(args):
 
     elif(show_all):
         info(f'Executing "{colored("sh ip int br", "white", attrs=["bold"])} on "{colored(hostname, "white", attrs=["bold"])}"')
-        show_interfaces(router=ip, iface="")
+        res = show_interfaces(router=ip, iface="")
+        print(res[1])
 
     elif(interface != None):
         if(toggle):
-            toggle_interfaces(router=ip, iface=interface)
+            res = toggle_interfaces(router=ip, iface=interface)
+            print(res[1])
+
         else:
             info(f'Executing "{colored(f"sh ip int {interface}", "white", attrs=["bold"])} on "{colored(hostname, "white", attrs=["bold"])}"')
-            show_interfaces(router=ip, iface=interface)
-
+            res = show_interfaces(router=ip, iface=interface)
+            print(res[1])
 
     
     
