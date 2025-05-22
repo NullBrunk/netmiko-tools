@@ -9,7 +9,7 @@ import argparse
 
 
 def main(args):
-    info(f"Launching script at {colored(strftime("%H:%M:%S"), "white", attrs=["bold"])}")
+    info(f'Launching script at {colored(strftime("%H:%M:%S"), "white", attrs=["bold"])}')
     hostname = args.hostname
     backup = args.backup
     show_all = args.show_all
@@ -45,7 +45,7 @@ def main(args):
         error("Nothing to do !")
         info("Exiting ...")
 
-    info(f"Ending script at {colored(strftime("%H:%M:%S"), "white", attrs=["bold"])}")
+    info(f'Ending script at {colored(strftime("%H:%M:%S"), "white", attrs=["bold"])}')
     
     
     
