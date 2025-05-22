@@ -27,7 +27,7 @@ def main(args):
         backup()
 
     elif(show_all):
-        info(f'Executing "{colored("sh ip int br", "white", attrs=["bold"])} on "{colored(hostname, "white", attrs=["bold"])}"')
+        info(f'Executing "{colored("sh ip int br", "white", attrs=["bold"])} on "{colored(hostname, "white", attrs=["bold"])}"\n')
         res = show_interfaces(router=ip, iface="")
         print(res[1])
 
