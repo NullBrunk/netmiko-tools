@@ -17,11 +17,11 @@ def display_interfaces_dataframe(df):
         .drop(columns="status_order")
 
     # On affiche les interfaces qui ont une IP sort by le fait qu'elle soit up ou down
-    presentation(f"> {colored('UP', 'green', attrs=['bold'])} interfaces")
+    presentation(f"{colored('UP', 'green', attrs=['bold'])}", "interfaces")
     print(with_ip_sorted)
 
     # On affiche les interfaces qui ont pas d'IP sort by le fait qu'elle soit up ou down
-    presentation(f"> {colored('DOWN', 'red', attrs=['bold'])} interfaces")
+    presentation(f"{colored('DOWN', 'red', attrs=['bold'])}", "interfaces")
     print(without_ip_sorted)
 
 
