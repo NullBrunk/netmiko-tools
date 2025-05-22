@@ -4,13 +4,13 @@ from netmiko import ConnectHandler
 from termcolor import colored
 from sys import argv
 
-DNS = {"PE1": "10.50.50.252", "PE2": "10.50.50.253", "PE3": "10.3.3.1", "P1": "10.99.99.2", "P2": "10.99.99.14"}
+ROUTERS = {"PE1": "10.50.50.252", "PE2": "10.50.50.253", "PE3": "10.3.3.1"}
 USERNAME = "aaa_user"
 PASSWORD = "root"
 
 def main(hostname: str, iface: str, state: str) -> None:
 
-	router_ip = DNS[hostname.upper()]
+	router_ip = ROUTERS[hostname.upper()]
 	cfg_set = [
 		f"interface {iface}",
 		"no sh" if(state == "on") else "sh"
@@ -22,7 +22,7 @@ def main(hostname: str, iface: str, state: str) -> None:
 	net_connect = ConnectHandler(device_type="cisco_ios", host=router_ip, username=USERNAME, password=PASSWORD)
 
 
-	# On se enablise, on envoie la commande et on log le retour
+	# Pour envoyer des confs il faut d'abord passer en enable
 	net_connect.enable()
 	print(net_connect.send_config_set(cfg_set))
 
