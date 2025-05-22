@@ -31,7 +31,7 @@ def main(args):
         quit()
 
     ip = ROUTERS[hostname]
-    session = ConnectHandler(device_type="cisco_ios", host=ip, username=USERNAME, password=PASSWORD)
+    session = ConnectHandler(device_type="cisco_ios", host=ip, username=USERNAME, password=PASSWORD, fast_cli=True,)
 
     ic = ifaceController(session=session)
 
@@ -68,16 +68,12 @@ def main(args):
     
 
 if __name__ == "__main__":
-
-    print("Je commence")
     parser = argparse.ArgumentParser(description="Cisco network management script")
     parser.add_argument("hostname", help="The router which you want to configure")
     parser.add_argument("-b", "--backup", help="Backup the running config", action="store_true", required=False)
     parser.add_argument("-si", "--show-interfaces", help="Send sh ip int br to the router", action="store_true", required=False)
     parser.add_argument("-i", "--interface", help="The interface which you want to configure", required=False)
     parser.add_argument("-t", "--toggle", help="Toggle the state of an interface", action="store_true", required=False)
-    print("Middle")
 
     args = parser.parse_args()
-    print("Go main")
     main(args)
