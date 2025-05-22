@@ -1,4 +1,4 @@
-from modules.ui.debug import presentation
+from modules.ui.logger import log
 from termcolor import colored
 
 def dataframe(df):
@@ -9,11 +9,11 @@ def dataframe(df):
 
 
     # On affiche les interfaces qui ont une IP sort by le fait qu'elle soit up ou down
-    presentation(f"{colored('UP', 'green', attrs=['bold'])}", "interfaces")
+    log.presentation(f"{colored('UP', 'green', attrs=['bold'])}", "interfaces")
     print(up_interfaces, end="\n\n")
 
     # On affiche les interfaces qui ont pas d'IP sort by le fait qu'elle soit up ou down
-    presentation(f"{colored('DOWN', 'red', attrs=['bold'])}", "interfaces")
+    log.presentation(f"{colored('DOWN', 'red', attrs=['bold'])}", "interfaces")
     print(down_interfaces)
 
 

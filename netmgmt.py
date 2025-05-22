@@ -2,9 +2,9 @@
 
 from modules.controllers.ifaceController import ifaceController
 
-from modules.ui.debug import success, info, error, presentation
 import modules.ui.interfaces as ui_interfaces
 from modules.ui.datetime import date_calculator
+from modules.ui.logger import log
 
 from netmiko import ConnectHandler
 
@@ -26,8 +26,8 @@ def main(args):
 
     # Vérifier que le hostname existe
     if(hostname not in ROUTERS):
-        error(f"{hostname} is not a valid hostname")
-        info(f"Please choose a router in: {ROUTERS_STRING}")
+        log.error(f"{hostname} is not a valid hostname")
+        log.info(f"Please choose a router in: {ROUTERS_STRING}")
         quit()
 
     ip = ROUTERS[hostname]
@@ -40,7 +40,7 @@ def main(args):
 
     # L'utilisateur veut afficher TOUTES les interfaces du routeur
     elif(show_interface):
-        success(f'Executing "{colored(f"sh ip int br", "white", attrs=["bold"])} on "{colored(hostname, "white", attrs=["bold"])}"\n')
+        log.success(f'Executing "{colored(f"sh ip int br", "white", attrs=["bold"])} on "{colored(hostname, "white", attrs=["bold"])}"\n')
 
         ui_interfaces.dataframe(
             ic.get_brief()
@@ -54,16 +54,16 @@ def main(args):
             )
 
         else:
-            success(f'Executing "{colored(f"sh ip int {interface}", "white", attrs=["bold"])} on "{colored(hostname, "white", attrs=["bold"])}"\n')
+            log.success(f'Executing "{colored(f"sh ip int {interface}", "white", attrs=["bold"])} on "{colored(hostname, "white", attrs=["bold"])}"\n')
             ui_interfaces.iface(
                 ic.get_iface(iface=interface)
             )
     
     else:
-        error("Nothing to do !")
+        log.error("Nothing to do !")
 
 
-    info(f'Took {colored(date_calculator(start, strftime("%H:%M:%S")), "white", attrs=["bold"])}', start="\n")
+    log.info(f'Took {colored(date_calculator(start, strftime("%H:%M:%S")), "white", attrs=["bold"])}', start="\n")
     
     
 
