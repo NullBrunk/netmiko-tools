@@ -20,6 +20,8 @@ def date_calculator(starting, ending):
     if(minutes != 0):
         to_ret += f"{minutes:02} minutes "
     if(seconds != 0):
-        to_ret += f"{seconds:02} seconds "
+        to_ret += f"{seconds:02} seconds"
 
+    if(to_ret = ""):
+        to_ret = "0 second"
     return to_ret
