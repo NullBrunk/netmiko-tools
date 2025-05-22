@@ -14,7 +14,7 @@ start = strftime("%H:%M:%S")
 def main(args):
     hostname = args.hostname
     backup = args.backup
-    show_interfaces = args.show_interfaces
+    show_interface = args.show_interfaces
     interface = args.interface
     toggle = args.toggle
 
@@ -28,7 +28,7 @@ def main(args):
     if(backup):
         backup()
 
-    elif(show_interfaces):
+    elif(show_interface):
         info(f'Executing "{colored("sh ip int br", "white", attrs=["bold"])} on "{colored(hostname, "white", attrs=["bold"])}"\n')
         res = show_interfaces(router=ip, iface="")
         print(res[1])
