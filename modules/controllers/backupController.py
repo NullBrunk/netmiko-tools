@@ -5,7 +5,7 @@ from time import strftime
 
 from modules.ui.logger import log
 
-class BackupController:
+class backupController:
     def __init__(self, session) -> None:
         self.session = session
         

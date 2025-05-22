@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 from modules.controllers.ifaceController import ifaceController
+from modules.controllers.backupController import backupController
 
 import modules.ui.interfaces as ui_interfaces
 from modules.ui.datetime import date_calculator
@@ -36,7 +37,7 @@ def main(args):
     ic = ifaceController(session=session)
 
     if(backup):
-        backup()
+        backupController.do_backup()
 
     # L'utilisateur veut afficher TOUTES les interfaces du routeur
     elif(show_interface):
