@@ -1,6 +1,6 @@
 from pandas import DataFrame
 
-def display_brief(result):
+def parse_brief(result):
 
     result = result.split("\n")
     del result[0]

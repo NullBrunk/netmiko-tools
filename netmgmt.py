@@ -1,16 +1,19 @@
 #!/usr/bin/env python3
 
-from modules.controllers.interfaces import show as show_iface, toggle as toggle_iface
+from modules.controllers.ifaceController import ifaceController
+
 from modules.ui.debug import success, info, error, presentation
-from modules.ui.interfaces import show_dataframe
+import modules.ui.interfaces as ui_interfaces
 from modules.ui.datetime import date_calculator
 
+from netmiko import ConnectHandler
+
+
 from termcolor import colored
-from modules.consts import ROUTERS, ROUTERS_STRING
+from modules.consts import ROUTERS, ROUTERS_STRING, USERNAME, PASSWORD
 from time import strftime
 import argparse
 
-INTERACTIVE = None
 
 start = strftime("%H:%M:%S")
 
@@ -26,34 +29,41 @@ def main(args):
         error(f"{hostname} is not a valid hostname")
         info(f"Please choose a router in: {ROUTERS_STRING}")
         quit()
+
     ip = ROUTERS[hostname]
-    
+    session = ConnectHandler(device_type="cisco_ios", host=ip, username=USERNAME, password=PASSWORD)
+
+    ic = ifaceController(session=session)
+
     if(backup):
         backup()
 
+    # L'utilisateur veut afficher TOUTES les interfaces du routeur
     elif(show_interface):
-        res = show_iface(router=ip)
-        df = res[1]
+        success(f'Executing "{colored(f"sh ip int br", "white", attrs=["bold"])} on "{colored(hostname, "white", attrs=["bold"])}"\n')
 
-        show_dataframe(df)
+        ui_interfaces.dataframe(
+            ic.get_brief()
+        )
+
 
     elif(interface != None):
         if(toggle):
-            res = toggle_iface(router=ip, iface=interface)
-            print(res[1])
+            ui_interfaces.iface(
+                ic.toggle(iface=interface)
+            )
 
         else:
             success(f'Executing "{colored(f"sh ip int {interface}", "white", attrs=["bold"])} on "{colored(hostname, "white", attrs=["bold"])}"\n')
-            # TODO: rewrite the mono int show thing
-            #res = show_interfaces(router=ip, iface=interface)
-            #print(res[1])
+            ui_interfaces.iface(
+                ic.get_iface(iface=interface)
+            )
     
     else:
         error("Nothing to do !")
 
 
     info(f'Took {colored(date_calculator(start, strftime("%H:%M:%S")), "white", attrs=["bold"])}', start="\n")
-    
     
     
 

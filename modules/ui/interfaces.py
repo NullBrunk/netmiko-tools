@@ -1,7 +1,7 @@
 from modules.ui.debug import presentation
 from termcolor import colored
 
-def show_dataframe(df):
+def dataframe(df):
     # On recupere les interfaces qui ont une ip
     up_interfaces = df[df["status"] == "up"]
     # On recupere les interfaces qui ont pas d'ip
@@ -23,3 +23,6 @@ def show_dataframe(df):
 
     print(f"\n\n{colored(f'{total} interfaces', 'white', attrs=['bold'])} ({colored(up_count, 'white', attrs=['bold'])} {colored('UP', 'green', attrs=['bold'])}, {colored(down_count, 'white', attrs=['bold'])} {colored('DOWN', 'red', attrs=['bold'])})")
     
+
+def iface(res):
+    print(res)
