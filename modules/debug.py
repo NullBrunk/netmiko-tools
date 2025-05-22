@@ -2,7 +2,7 @@ from termcolor import colored
 
 def general_logger(message: str, bold: bool, symbol: str, color: str, start: str = '', end: str = '\n'):
     print(
-        start,
+        start + 
         colored(f"[{symbol}]", color, attrs=["bold"]),
         colored(message, "white", attrs=["bold"] if bold else None),
         end=end
