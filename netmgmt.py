@@ -34,7 +34,7 @@ def main(args):
     ip = ROUTERS[hostname]
     session = ConnectHandler(device_type="cisco_ios", host=ip, username=USERNAME, password=PASSWORD, fast_cli=True,)
 
-    ic = ifaceController(session=session)
+    ic = ifaceController(hostname=hostname, session=session)
     bc = backupController(session=session)
 
     if(backup):

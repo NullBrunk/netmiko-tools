@@ -6,7 +6,8 @@ from time import strftime
 from modules.ui.logger import log
 
 class backupController:
-    def __init__(self, session) -> None:
+    def __init__(self, hostname: str, session) -> None:
+        self.hostname = hostname
         self.session = session
         
     def do_backup(self):
@@ -17,7 +18,7 @@ class backupController:
 
         # On génére un nom unique basé sur Année Mois Jour Heure Minute Secondes
 
-        backup_folder = abspath(dirname(__file__) + "/../../backups/") + "/" + strftime("%Y-%m-%d_%H-%M-%S")
+        backup_folder = abspath(dirname(__file__) + "/../../backups/") + "/" + self.hostname + "_" + strftime("%Y-%m-%d_%H-%M-%S")
         makedirs(backup_folder, exist_ok=True)
 
         startup_config_backup = backup_folder + "/startup_config"
