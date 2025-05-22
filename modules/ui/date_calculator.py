@@ -1,6 +1,6 @@
 def date_calculator(starting, ending):
-    s_hour, s_minute, s_second = starting.split(":")
-    e_hour, e_minute, e_second = ending.split(":")
+    s_hour, s_minute, s_second = map(int, starting.split(":"))
+    e_hour, e_minute, e_second = map(int, ending.split(":"))
 
     # On converti en seconde
     start_seconds = s_hour * 3600 + s_minute * 60 + s_second
