@@ -17,7 +17,7 @@ class backupController:
 
         # On génére un nom unique basé sur Année Mois Jour Heure Minute Secondes
 
-        backup_folder = abspath(dirname(__file__) + "/../backups/") + strftime("%Y-%m-%d_%H-%M-%S")
+        backup_folder = abspath(dirname(__file__) + "/../../backups/") + "/" + strftime("%Y-%m-%d_%H-%M-%S")
         makedirs(backup_folder, exist_ok=True)
 
         startup_config_backup = backup_folder + "/startup_config"
