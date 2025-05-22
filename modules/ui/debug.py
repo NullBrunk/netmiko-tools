@@ -19,7 +19,7 @@ def success(message: str, bold: bool = False, start = '', end = '\n'):
 
 def presentation(message1: str, message2: str):
     print(
-        colored(">", "blue", attrs=["bold"]), 
+        colored(">", "white", attrs=["bold"]), 
         colored(message1, "white", attrs=["bold"]),
         colored(message2, "white", attrs=["bold"]),
     )
