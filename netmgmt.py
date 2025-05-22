@@ -35,9 +35,10 @@ def main(args):
     session = ConnectHandler(device_type="cisco_ios", host=ip, username=USERNAME, password=PASSWORD, fast_cli=True,)
 
     ic = ifaceController(session=session)
+    bc = backupController(session=session)
 
     if(backup):
-        backupController.do_backup()
+        bc.do_backup()
 
     # L'utilisateur veut afficher TOUTES les interfaces du routeur
     elif(show_interface):
