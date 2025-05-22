@@ -20,7 +20,7 @@ def main(args):
         error(f"{hostname} is not a valid hostname")
         info(f"Please choose a router in: {ROUTERS_STRING}")
         quit()
-    ip = ROUTERS["hostname"]
+    ip = ROUTERS[hostname]
     
     if(backup):
         backup()
