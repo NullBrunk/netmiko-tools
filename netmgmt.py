@@ -47,7 +47,7 @@ def main(args):
         error("Nothing to do !")
 
 
-    info(f'{colored(strftime("%H:%M:%S"), "white", attrs=["bold"])} Took {colored(date_calculator(start, strftime("%H:%M:%S")), "white", attrs=["bold"])}', start="\n")
+    info(f'Took {colored(date_calculator(start, strftime("%H:%M:%S")), "white", attrs=["bold"])}', start="\n")
     
     
     
