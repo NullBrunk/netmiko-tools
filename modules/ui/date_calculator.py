@@ -18,11 +18,11 @@ def date_calculator(starting, ending):
     if(hours != 0):
         to_ret += f"{hours:02} hour{'' if hours == 1 else 's'} "
     if(minutes != 0):
-        if(hours == 0 and minutes < 10):
+        if(not(hours == 0 and minutes < 10)):
             to_ret += "0"
         to_ret += f"{seconds} minute{'' if minutes == 1 else 's'} "
     if(seconds != 0):
-        if(hours == 0 and minutes == 0 and seconds < 10):
+        if(not(hours == 0 and minutes == 0 and seconds < 10)):
             to_ret += "0"
         to_ret += f"{seconds} second{'' if seconds == 1 else 's'}"
 
