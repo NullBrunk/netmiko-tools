@@ -4,10 +4,12 @@ from modules.interfaces import get_info as show_interfaces, toggle as toggle_int
 from modules.debug import success, info, error, presentation
 from termcolor import colored
 from modules.consts import ROUTERS, ROUTERS_STRING
+from time import strftime
 import argparse
 
 
 def main(args):
+    info(f"Launching script at {colored(strftime("%H:%M:%S"), "white", attrs=["bold"])}")
     hostname = args.hostname
     backup = args.backup
     show_all = args.show_all
@@ -38,7 +40,13 @@ def main(args):
             info(f'Executing "{colored(f"sh ip int {interface}", "white", attrs=["bold"])} on "{colored(hostname, "white", attrs=["bold"])}"')
             res = show_interfaces(router=ip, iface=interface)
             print(res[1])
+    
+    else:
+        error("Nothing to do !")
+        info("Exiting ...")
 
+    info(f"Ending script at {colored(strftime("%H:%M:%S"), "white", attrs=["bold"])}")
+    
     
     
 
