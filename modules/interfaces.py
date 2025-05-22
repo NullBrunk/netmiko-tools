@@ -1,6 +1,7 @@
+from modules.parser.parse_interfaces import parse_interface_brief
 from modules.consts import USERNAME, PASSWORD
 from netmiko import ConnectHandler
-from modules.debug import info, success
+from modules.ui.debug import info, success
 from termcolor import colored
 
 def get_info(router: str, iface: str):
@@ -11,10 +12,10 @@ def get_info(router: str, iface: str):
 
 	# On se co en SSH en utilisant les creds RADIUS
 	net_connect = ConnectHandler(device_type="cisco_ios", host=router, username=USERNAME, password=PASSWORD)
+	result = net_connect.send_command(command)
 
-	# TODO: Parse with **pandas** by Interface, IP, Status and protocol columns
-	return net_connect, net_connect.send_command(command)
-	# TODO: Make resume, alerts etc ... improve UX
+	result = parse_interface_brief()
+	return net_connect, result
 
 
 def toggle(router: str, iface: str) -> None:

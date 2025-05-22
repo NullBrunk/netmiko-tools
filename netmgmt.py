@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
 from modules.interfaces import get_info as show_interfaces, toggle as toggle_interfaces
-from modules.debug import success, info, error, presentation
+from modules.ui.display_interfaces import display_interfaces_dataframe
+from modules.ui.debug import success, info, error, presentation
 from modules.ui.date_calculator import date_calculator
 
 from termcolor import colored
@@ -33,9 +34,9 @@ def main(args):
     elif(show_interface):
         info(f'Executing "{colored("sh ip int br", "white", attrs=["bold"])} on "{colored(hostname, "white", attrs=["bold"])}"\n')
         res = show_interfaces(router=ip, iface="")
-        global INTERACTIVE
-        INTERACTIVE = res[1]
-        print(res[1])
+        df = res[1]
+
+        display_interfaces_dataframe(df)
 
     elif(interface != None):
         if(toggle):
