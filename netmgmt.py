@@ -37,15 +37,15 @@ def main(args):
             print(res[1])
 
         else:
-            info(f'Executing "{colored(f"sh ip int {interface}", "white", attrs=["bold"])} on "{colored(hostname, "white", attrs=["bold"])}"')
+            success(f'Executing "{colored(f"sh ip int {interface}", "white", attrs=["bold"])} on "{colored(hostname, "white", attrs=["bold"])}"\n')
             res = show_interfaces(router=ip, iface=interface)
             print(res[1])
     
     else:
         error("Nothing to do !")
-        info("Exiting ...")
 
-    info(f'Ending script at {colored(strftime("%H:%M:%S"), "white", attrs=["bold"])}')
+
+    info(f'Ending script at {colored(strftime("%H:%M:%S"), "white", attrs=["bold"])}', start="\n")
     
     
     
