@@ -33,7 +33,7 @@ def main(args):
 
     elif(show_interface):
         info(f'Executing "{colored("sh ip int br", "white", attrs=["bold"])} on "{colored(hostname, "white", attrs=["bold"])}"\n')
-        res = show_interfaces(router=ip, iface="")
+        res = show_interfaces(router=ip)
         df = res[1]
 
         display_interfaces_dataframe(df)
