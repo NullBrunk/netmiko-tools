@@ -1,5 +1,52 @@
+#!/usr/bin/env python3
+
+from modules.interfaces import get_info as show_interfaces, toggle as toggle_interfaces
+from modules.debug import success, info, error, presentation
+from netmiko import ConnectHandler
+from termcolor import colored
+from modules.consts import *
 import argparse
 
-# -i
-# -d
-# -....
+
+def main(args):
+    hostname = args.hostname
+    backup = args.backup
+    show_all = args.show_all
+    interface = args.interface
+    toggle = args.toggle
+
+    # Vérifier que le hostname existe
+    if(hostname not in ROUTERS):
+        error(f"{hostname} is not a valid hostname")
+        info(f"Please choose a router in: {ROUTERS_STRING}")
+        quit()
+    ip = ROUTERS["hostname"]
+    
+    if(backup):
+        backup()
+
+    elif(show_all):
+        info(f'Executing "{colored("sh ip int br", "white", attrs=["bold"])} on "{colored(hostname, "white", attrs=["bold"])}"')
+        show_interfaces(router=ip, iface="")
+
+    elif(interface != None):
+        if(toggle):
+            toggle_interfaces(router=ip, iface=interface)
+        else:
+            info(f'Executing "{colored(f"sh ip int {interface}", "white", attrs=["bold"])} on "{colored(hostname, "white", attrs=["bold"])}"')
+            show_interfaces(router=ip, iface=interface)
+
+
+    
+    
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Cisco network management script")
+    parser.add_argument("hostname", help="The router which you want to configure", metavar="HOSTNAME")           # positional argument
+    parser.add_argument("-b", "--backup", help="Backup the running config", metavar="BACKUP", action="store_true", required=False)     
+    parser.add_argument("-sa", "--show-all", help="Send sh ip int br to the router", action="store_true", required=False)
+    parser.add_argument("-i", "--interface", help="The interface which you want to configure", metavar="INTERFACE", required=False)     
+    parser.add_argument("-t", "--toggle", help="Toggle the state of an interface", action="store_true", required=False)
+
+    args = parser.parse_args()
+    main(args)
