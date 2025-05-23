@@ -2,8 +2,13 @@
 
 from modules.controllers.ifaceController import ifaceController
 from modules.controllers.backupController import backupController
+from modules.controllers.routeController import routeController
 
 import modules.ui.interfaces as ui_interfaces
+import modules.ui.routes as ui_routes
+import modules.ui.backup as ui_backup
+
+
 from modules.ui.datetime import date_calculator
 from modules.ui.logger import log
 
@@ -20,12 +25,6 @@ start = strftime("%H:%M:%S")
 
 def main(args):
     hostname = args.hostname
-    backup = args.backup
-    show_all = args.show_all
-    show = args.show
-    interface = args.interface
-    toggle = args.toggle
-
 
     # Vérifier que le hostname existe
     if(hostname not in ROUTERS):
@@ -36,53 +35,76 @@ def main(args):
     ip = ROUTERS[hostname]
     session = ConnectHandler(device_type="cisco_ios", host=ip, username=USERNAME, password=PASSWORD, fast_cli=True,)
 
-    ic = ifaceController(session=session)
-    bc = backupController(hostname=hostname, session=session)
+    if(args.component == "interfaces"):
+        ic = ifaceController(session=session)
 
-    if(backup):
-        bc.do_backup()
-
-    # L'utilisateur veut afficher TOUTES les interfaces du routeur
-    elif(show_all):
-        log.success(f'Executing "{colored(f"sh ip int br", "white", attrs=["bold"])} on "{colored(hostname, "white", attrs=["bold"])}"\n')
-
-        ui_interfaces.dataframe(
-            ic.get_brief()
-        )
-
-
-    elif(interface != None):
-        if(show):
-            log.success(f'Executing "{colored(f"sh ip int {interface}", "white", attrs=["bold"])} on "{colored(hostname, "white", attrs=["bold"])}"\n')
-            ui_interfaces.iface(
-                ic.get_iface(iface=interface)
-            )
-
-        elif(toggle):
-            ui_interfaces.iface(
-                ic.toggle(iface=interface)
-            )
-
+        if(args.show_all):
+            ui_interfaces.dataframe(ic.get_brief())
+        elif(args.show and args.interface != ""):
+            ui_interfaces.iface(ic.get_iface(iface=args.interface))
+        elif(args.toggle and args.interface != ""):
+            ui_interfaces.iface(ic.toggle(iface=args.interface))
         else:
-            log.error("Nothing to do !")
-            log.info("Please choose between -t and -s")
-    
-    else:
-        log.error("Nothing to do !")
+            log.error("nothing to do")
+
+    elif(args.component == "routes"):
+        rc = routeController(session=session, vrf=args.vrf)
+        
+        if(args.show_all):
+            ui_routes.show(rc.all())
+        elif(args.ospf):
+            ui_routes.show(rc.ospf())
+        elif(args.bgp):
+            ui_routes.show(rc.bgp())
+        elif(args.static):
+            ui_routes.show(rc.static())
+        else:
+            log.error("nothing to do")
+
+    elif(args.component == "backups"):
+        bc = backupController(hostname=hostname, session=session)
+
+        if(args.make):
+            ui_backup.show(bc.make())
+        elif(args.list):
+            ui_backup.show(bc.list_backups())
+        elif(args.diff):
+            ui_backup.show(bc.diff())
+        else:
+            log.error("nothing to do")
 
 
     log.info(f'Took {colored(date_calculator(start, strftime("%H:%M:%S")), "white", attrs=["bold"])}', start="\n")
     
     
-
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Cisco network management script")
     parser.add_argument("hostname", help="The router which you want to configure")
-    parser.add_argument("-b", "--backup", help="Backup the running config", action="store_true", required=False)
-    parser.add_argument("-i", "--interface", help="The interface which you want to configure", required=False)
-    parser.add_argument("-s", "--show", help="Show specific information", action="store_true", required=False)
-    parser.add_argument("-sa", "--show-all", help="Show all the informatipns", action="store_true", required=False)
-    parser.add_argument("-t", "--toggle", help="Toggle the state", action="store_true", required=False)
+
+    subparsers = parser.add_subparsers(dest="component", required=True)
+
+    # ./netmgmt.py PE1 interfaces ......
+    interface_parser = subparsers.add_parser("interfaces", help="Manage interfaces")
+    interface_parser.add_argument("-i", "--interface",  help="Specify an interface")
+    interface_parser.add_argument("-s", "--show", action="store_true", help="Show the interface")
+    interface_parser.add_argument("-sa", "--show-all", action="store_true", help="Show all the interfaces")
+    interface_parser.add_argument("-t", "--toggle", help="Toggle the state", action="store_true", required=False)
+
+    # ./netmgmt.py PE1 routes ......
+    router_parser = subparsers.add_parser("routes", help="Manage routes")
+    router_parser.add_argument("-v", "--vrf", help="Specify a VRF")
+    router_parser.add_argument("-sa", "--show-all", action="store_true", help="Show routes")
+    router_parser.add_argument("-o", "--ospf", action="store_true", help="Show OSPF routes")
+    router_parser.add_argument("-b", "--bgp", action="store_true", help="Show BGP routes")
+    router_parser.add_argument("-s", "--static", action="store_true", help="Show static routes")
+    
+    # ./netmgmt.py PE1 backuo ......
+    backup_parser = subparsers.add_parser("backup", help="Manage backups")
+    backup_parser = router_parser.add_mutually_exclusive_group(required=True)
+    backup_parser.add_argument("-m", "--make", help="Make a backup", action="store_true", required=False)
+    backup_parser.add_argument("-l", "--list", help="List all backups", required=False)
+    backup_parser.add_argument("-d", "--diff", help="Diff between current config and last backup", action="store_true", required=False)
+
 
     args = parser.parse_args()
     main(args)

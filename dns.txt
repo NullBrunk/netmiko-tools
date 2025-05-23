@@ -1,0 +1,12 @@
+#
+# Entries should be in the format:
+# HOSTNAME IP
+# e.g:
+# PE3 10.50.50.1
+#
+     
+ 
+PE1 10.50.50.252
+PE2 10.50.50.253     
+PE3 10.3.3.1 
+     

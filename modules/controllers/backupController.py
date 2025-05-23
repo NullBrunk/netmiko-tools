@@ -10,7 +10,7 @@ class backupController:
         self.hostname = hostname
         self.session = session
         
-    def do_backup(self):
+    def make(self):
         self.session.enable()
 
         startup_config = self.session.send_command(f"sh startup")
@@ -33,4 +33,9 @@ class backupController:
             f.write(running_config)
 
         log.success("Done")
-        
+
+    def list_backups(self):
+        pass
+
+    def diff(self):
+        pass

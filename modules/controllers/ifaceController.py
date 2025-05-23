@@ -6,7 +6,6 @@ from modules.consts import UP, DOWN
 class ifaceController:
 	def __init__(self, session) -> None:
 		self.session = session
-		pass
 
 	def get_brief(self):
 		parsed = ifaceParser.parse_brief(
@@ -31,7 +30,7 @@ class ifaceController:
 
 		cfg_set = [
 			f"interface {iface}",
-			"no sh" if(state) else "sh"
+			"sh" if(state) else "no sh"
 		]
 
 		self.session.enable()
