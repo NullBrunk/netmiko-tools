@@ -100,7 +100,7 @@ if __name__ == "__main__":
     
     # ./netmgmt.py PE1 backuo ......
     backup_parser = subparsers.add_parser("backup", help="Manage backups")
-    backup_parser = router_parser.add_mutually_exclusive_group(required=True)
+    backup_parser = backup_parser.add_mutually_exclusive_group(required=True)
     backup_parser.add_argument("-m", "--make", help="Make a backup", action="store_true", required=False)
     backup_parser.add_argument("-l", "--list", help="List all backups", required=False)
     backup_parser.add_argument("-d", "--diff", help="Diff between current config and last backup", action="store_true", required=False)
