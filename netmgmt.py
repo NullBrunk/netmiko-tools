@@ -40,9 +40,9 @@ def main(args):
 
         if(args.show_all):
             ui_interfaces.dataframe(ic.get_brief())
-        elif(args.show and args.interface != ""):
+        elif(args.show and args.interface != None):
             ui_interfaces.iface(ic.get_iface(iface=args.interface))
-        elif(args.toggle and args.interface != ""):
+        elif(args.toggle and args.interface != None):
             ui_interfaces.iface(ic.toggle(iface=args.interface))
         else:
             log.error("nothing to do")
