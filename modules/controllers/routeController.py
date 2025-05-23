@@ -19,5 +19,5 @@ class routeController:
         return result
     
     def static(self):
-        result = self.session.send_command(f"sh ip static {self.to_add} bgp | include /")
+        result = self.session.send_command(f"sh ip route {self.to_add} static | include /")
         return result
