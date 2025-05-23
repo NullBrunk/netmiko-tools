@@ -79,10 +79,10 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Cisco network management script")
     parser.add_argument("hostname", help="The router which you want to configure")
     parser.add_argument("-b", "--backup", help="Backup the running config", action="store_true", required=False)
-    parser.add_argument("-sa", "--show-all", help="Show all the informatipns", action="store_true", required=False)
     parser.add_argument("-i", "--interface", help="The interface which you want to configure", required=False)
-    parser.add_argument("-t", "--toggle", help="Toggle the state of an interface", action="store_true", required=False)
     parser.add_argument("-s", "--show", help="Show specific information", action="store_true", required=False)
+    parser.add_argument("-sa", "--show-all", help="Show all the informatipns", action="store_true", required=False)
+    parser.add_argument("-t", "--toggle", help="Toggle the state", action="store_true", required=False)
 
     args = parser.parse_args()
     main(args)
