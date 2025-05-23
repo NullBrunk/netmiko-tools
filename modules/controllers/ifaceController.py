@@ -24,7 +24,7 @@ class ifaceController:
 	def toggle(self, iface: str):
 		log.info(f"Determining wether {iface} is {UP} or {DOWN}")
 
-		result = self.get_iface_controller(iface)
+		result = self.get_iface(iface)
 		state = "is up" in result
 
 		log.success(f"Interface {iface} is {UP if state else DOWN}")

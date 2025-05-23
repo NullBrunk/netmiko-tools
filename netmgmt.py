@@ -21,9 +21,11 @@ start = strftime("%H:%M:%S")
 def main(args):
     hostname = args.hostname
     backup = args.backup
-    show_interface = args.show_interfaces
+    show_all = args.show_all
+    show = args.show
     interface = args.interface
     toggle = args.toggle
+
 
     # Vérifier que le hostname existe
     if(hostname not in ROUTERS):
@@ -41,7 +43,7 @@ def main(args):
         bc.do_backup()
 
     # L'utilisateur veut afficher TOUTES les interfaces du routeur
-    elif(show_interface):
+    elif(show_all):
         log.success(f'Executing "{colored(f"sh ip int br", "white", attrs=["bold"])} on "{colored(hostname, "white", attrs=["bold"])}"\n')
 
         ui_interfaces.dataframe(
@@ -50,16 +52,20 @@ def main(args):
 
 
     elif(interface != None):
-        if(toggle):
+        if(show):
+            log.success(f'Executing "{colored(f"sh ip int {interface}", "white", attrs=["bold"])} on "{colored(hostname, "white", attrs=["bold"])}"\n')
+            ui_interfaces.iface(
+                ic.get_iface(iface=interface)
+            )
+
+        elif(toggle):
             ui_interfaces.iface(
                 ic.toggle(iface=interface)
             )
 
         else:
-            log.success(f'Executing "{colored(f"sh ip int {interface}", "white", attrs=["bold"])} on "{colored(hostname, "white", attrs=["bold"])}"\n')
-            ui_interfaces.iface(
-                ic.get_iface(iface=interface)
-            )
+            log.error("Nothing to do !")
+            log.info("Please choose between -t and -s")
     
     else:
         log.error("Nothing to do !")
@@ -73,9 +79,10 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Cisco network management script")
     parser.add_argument("hostname", help="The router which you want to configure")
     parser.add_argument("-b", "--backup", help="Backup the running config", action="store_true", required=False)
-    parser.add_argument("-si", "--show-interfaces", help="Send sh ip int br to the router", action="store_true", required=False)
+    parser.add_argument("-sa", "--show-all", help="Show all the informatipns", action="store_true", required=False)
     parser.add_argument("-i", "--interface", help="The interface which you want to configure", required=False)
     parser.add_argument("-t", "--toggle", help="Toggle the state of an interface", action="store_true", required=False)
+    parser.add_argument("-s", "--show", help="Show specific information", action="store_true", required=False)
 
     args = parser.parse_args()
     main(args)
