@@ -35,7 +35,7 @@ def main(args):
     ip = ROUTERS[hostname]
     session = ConnectHandler(device_type="cisco_ios", host=ip, username=USERNAME, password=PASSWORD, fast_cli=True,)
 
-    if(args.component == "interfaces"):
+    if(args.component == "interface"):
         ic = ifaceController(session=session)
 
         if(args.show_all):
@@ -47,7 +47,7 @@ def main(args):
         else:
             log.error("nothing to do")
 
-    elif(args.component == "routes"):
+    elif(args.component == "route"):
         rc = routeController(session=session, vrf=args.vrf)
         
         if(args.show_all):
@@ -61,11 +61,10 @@ def main(args):
         else:
             log.error("nothing to do")
 
-    elif(args.component == "backups"):
+    elif(args.component == "backup"):
         bc = backupController(hostname=hostname, session=session)
 
         if(args.make):
-            print("En effet")
             ui_backup.show(bc.make())
         elif(args.list):
             ui_backup.show(bc.list_backups())
