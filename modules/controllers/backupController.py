@@ -56,7 +56,7 @@ class backupController:
 
         for router in backed_up_routers:
             log.presentation(router, "")
-            backups = backed_up_routers[backup]
+            backups = backed_up_routers[router]
             backups.sort()
 
             for backup in backups:
