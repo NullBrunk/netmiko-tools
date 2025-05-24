@@ -1,9 +1,12 @@
+from modules.ui.dateui import format_relative_time
+from modules.ui.logger import log
+
+from datetime import datetime, timedelta
 from os.path import abspath, dirname
 from os import makedirs, listdir
 
 from time import strftime
 
-from modules.ui.logger import log
 
 class backupController:
     def __init__(self, hostname: str, session) -> None:
@@ -42,31 +45,26 @@ class backupController:
         # "PE1": ["PE1_2025-05-23_02-03-09", "PE1_2025-05-23_02-03-12"]
         # "PE2": ["PE2_2025-05-23_02-04-21", "PE2_2025-05-23_02-06-09"]
         #}
-        backed_up_routers = {}
+        my_backups = []
         for backup in backups:
             hostname = backup.split("_")[0]
 
-            if(not hostname in backed_up_routers):
-                backed_up_routers[hostname] = []
-                
-            backed_up_routers[hostname].append(backup)
+            if(hostname == self.hostname):
+                my_backups.append(backup)
 
-        # On trie les clés histoire que ca soit plus propre
-        backed_up_routers = dict(sorted(backed_up_routers.items()))
+        my_backups.sort()
+        log.presentation(self.hostname, f"last backup: {format_relative_time(my_backups[0])}")
 
-        for router in backed_up_routers:
-            log.presentation(router, "")
-            backups = backed_up_routers[router]
-            backups.sort()
+        for backup in my_backups:
+            print()
 
-            for backup in backups:
-                path = abspath(dirname(__file__) + "/../../backups/") + "/" + backup
+            path = abspath(dirname(__file__) + "/../../backups/") + "/" + backup
 
-                backup = backup.split("_")
-                date = backup[1].split("-")
-                hour = ':'.join(backup[2].split("-")[:2])
+            backup = backup.split("_")
+            date = backup[1].split("-")
+            hour = ':'.join(backup[2].split("-")[:2])
 
-                date = f"{int(date[1])-1} {date[2]}, {date[0]} at {hour}"
+            date = f"{self.convertion(int(date[1])-1)} {date[2]}, {date[0]} at {hour}"
 
 
-                print(date, "    ", path)
+            print(date, "    ", path)

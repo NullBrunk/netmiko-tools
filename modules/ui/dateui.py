@@ -29,3 +29,35 @@ def date_calculator(starting, ending):
     if(to_ret == ""):
         to_ret = "0 second"
     return to_ret
+
+
+from datetime import datetime, timedelta
+
+def format_relative_time(timestamp_str):
+    # Extrait la date depuis un truc du genre "PE1_2025-05-23_02-03-09"
+    dt_str = timestamp_str.split('_', 1)[1]
+    dt = datetime.strptime(dt_str, "%Y-%m-%d_%H-%M-%S")
+    
+    now = datetime.now()
+    delta = now - dt
+
+    seconds = int(delta.total_seconds())
+    minutes = seconds // 60
+    hours = minutes // 60
+    days = delta.days
+    years = days // 365
+
+    if seconds < 60:
+        return "just now"
+    elif minutes < 60:
+        return f"{minutes} minute{'s' if minutes > 1 else ''} ago"
+    elif hours < 24:
+        return f"{hours} hour{'s' if hours > 1 else ''} ago"
+    elif days < 365:
+        return f"{days} day{'s' if days > 1 else ''} ago"
+    else:
+        return f"{years} year{'s' if years > 1 else ''} ago"
+
+# Exemple
+s = "PE1_2025-05-23_02-03-09"
+print(format_relative_time(s))
