@@ -35,7 +35,7 @@ def main(args):
     ip = ROUTERS[hostname]
     session = ConnectHandler(device_type="cisco_ios", host=ip, username=USERNAME, password=PASSWORD, fast_cli=True,)
 
-    if(args.component == "interface"):
+    if(args.component == "ifaces"):
         ic = ifaceController(session=session)
 
         if(args.list_all):
@@ -47,7 +47,7 @@ def main(args):
         else:
             log.error("nothing to do")
 
-    elif(args.component == "route"):
+    elif(args.component == "routes"):
         rc = routeController(session=session, vrf=args.vrf)
         
         if(args.list_all):
@@ -61,7 +61,7 @@ def main(args):
         else:
             log.error("nothing to do")
 
-    elif(args.component == "backup"):
+    elif(args.component == "backups"):
         bc = backupController(hostname=hostname, session=session)
 
         if(args.make):
@@ -82,26 +82,26 @@ if __name__ == "__main__":
 
     subparsers = parser.add_subparsers(dest="component", required=True)
 
-    # ./netmgmt.py PE1 interface ......
-    interface_parser = subparsers.add_parser("interface", help="Manage interfaces")
+    # ./netmgmt.py PE1 ifaces ......
+    interface_parser = subparsers.add_parser("interfaces", help="Manage interfaces")
     interface_parser.add_argument("-i", "--interface",  help="Specify an interface")
     interface_parser.add_argument("-l", "--list", action="store_true", help="Show the interface")
     interface_parser.add_argument("-la", "--list-all", action="store_true", help="Show all the interfaces")
     interface_parser.add_argument("-t", "--toggle", help="Toggle the state", action="store_true", required=False)
 
-    # ./netmgmt.py PE1 route ......
-    router_parser = subparsers.add_parser("route", help="Manage routes")
+    # ./netmgmt.py PE1 routes ......
+    router_parser = subparsers.add_parser("routes", help="Manage routes")
     router_parser.add_argument("-v", "--vrf", help="Specify a VRF")
     router_parser.add_argument("-la", "--list-all", action="store_true", help="Show routes")
     router_parser.add_argument("-o", "--ospf", action="store_true", help="Show OSPF routes")
     router_parser.add_argument("-b", "--bgp", action="store_true", help="Show BGP routes")
     router_parser.add_argument("-s", "--static", action="store_true", help="Show static routes")
     
-    # ./netmgmt.py PE1 backup ......
-    backup_parser = subparsers.add_parser("backup", help="Manage backups")
+    # ./netmgmt.py PE1 backups ......
+    backup_parser = subparsers.add_parser("backups", help="Manage backups")
     backup_parser = backup_parser.add_mutually_exclusive_group(required=True)
     backup_parser.add_argument("-m", "--make", help="Make a backup", action="store_true", required=False)
-    backup_parser.add_argument("-la", "--list", help="List all backups", required=False)
+    backup_parser.add_argument("-la", "--list", help="List all backups", action="store_true", required=False)
 
 
     args = parser.parse_args()
