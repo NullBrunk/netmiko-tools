@@ -63,6 +63,6 @@ class backupController:
             date = backup[1].split("-")
             hour = ':'.join(backup[2].split("-")[:2])
 
-            date_formated = f"{colored(f"{self.convertion[int(date[1])-1]} {date[2]}, {date[0]}", 'cyan')} at {colored(hour, 'cyan')}"
+            date_formated = f"{colored(f'{self.convertion[int(date[1])-1]} {date[2]}, {date[0]}', 'cyan')} at {colored(hour, 'cyan')}"
 
             justify_space_between(date_formated, path)
