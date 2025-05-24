@@ -64,7 +64,7 @@ class backupController:
             date = backup[1].split("-")
             hour = ':'.join(backup[2].split("-")[:2])
 
-            date = f"{self.convertion(int(date[1])-1)} {date[2]}, {date[0]} at {hour}"
+            date = f"{self.convertion[int(date[1])-1]} {date[2]}, {date[0]} at {hour}"
 
 
             print(date, "    ", path)

@@ -58,6 +58,3 @@ def format_relative_time(timestamp_str):
     else:
         return f"{years} year{'s' if years > 1 else ''} ago"
 
-# Exemple
-s = "PE1_2025-05-23_02-03-09"
-print(format_relative_time(s))
