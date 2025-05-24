@@ -101,7 +101,7 @@ if __name__ == "__main__":
     backup_parser = subparsers.add_parser("backups", help="Manage backups")
     backup_parser = backup_parser.add_mutually_exclusive_group(required=True)
     backup_parser.add_argument("-m", "--make", help="Make a backup", action="store_true", required=False)
-    backup_parser.add_argument("-la", "--list", help="List all backups", action="store_true", required=False)
+    backup_parser.add_argument("-la", "--list-all", help="List all backups", action="store_true", required=False)
 
 
     args = parser.parse_args()
