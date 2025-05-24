@@ -53,7 +53,9 @@ class backupController:
             if(hostname == self.hostname):
                 my_backups.append(backup)
 
-        my_backups.sort().reverse()
+        my_backups.sort()
+        my_backups.reverse()
+        
         print(colored("> " + self.hostname, "white", attrs=["bold"]), colored(f"  last backup: {format_relative_time(my_backups[-1])}\n", "yellow"))
 
         for backup in my_backups:
