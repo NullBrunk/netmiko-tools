@@ -53,7 +53,7 @@ class backupController:
                 my_backups.append(backup)
 
         my_backups.sort()
-        log.presentation(self.hostname, colored(f"last backup: {format_relative_time(my_backups[0])}\n", "white"))
+        print(colored("> " + self.hostname, "white", attrs=["bold"]), colored(f"  last backup: {format_relative_time(my_backups[0])}\n", "yellow"))
 
         for backup in my_backups:
             path = abspath(dirname(__file__) + "/../../backups/") + "/" + backup
