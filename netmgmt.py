@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from modules.consts import ROUTERS, ROUTERS_STRING, USERNAME, PASSWORD
 
 from modules.controllers.ifaceController import ifaceController
 from modules.controllers.backupController import backupController
@@ -6,20 +7,13 @@ from modules.controllers.routeController import routeController
 
 import modules.ui.interfaces as ui_interfaces
 import modules.ui.routes as ui_routes
-import modules.ui.backup as ui_backup
-
-
 from modules.ui.dateui import date_calculator
 from modules.ui.logger import log
 
 from netmiko import ConnectHandler
-
-
 from termcolor import colored
-from modules.consts import ROUTERS, ROUTERS_STRING, USERNAME, PASSWORD
 from time import strftime
 import argparse
-
 
 start = strftime("%H:%M:%S")
 
