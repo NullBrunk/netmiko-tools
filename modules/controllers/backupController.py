@@ -63,7 +63,7 @@ class backupController:
                 path = abspath(dirname(__file__) + "/../../backups/") + "/" + backup
 
                 backup = backup.split("_")
-                date = backup[1].split("/")
+                date = backup[1].split("-")
                 hour = ':'.join(backup[2].split("-")[:2])
 
                 date = f"{int(date[1])-1} {date[2]}, {date[0]} at {hour}"
