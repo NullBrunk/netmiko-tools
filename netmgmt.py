@@ -72,7 +72,6 @@ def main(args):
             log.error("nothing to do")
 
 
-    session.disconnect()
     log.info(f'Took {colored(date_calculator(start, strftime("%H:%M:%S")), "white", attrs=["bold"])}', start="\n")
     
     
