@@ -17,6 +17,7 @@ def parse_brief(result):
     
         del result[i][2]
         del result[i][2]
+    print(result)
     
     df = DataFrame(result, columns=['iname', 'address', 'status', 'protocol'])
     
