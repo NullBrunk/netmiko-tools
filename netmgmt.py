@@ -82,7 +82,7 @@ if __name__ == "__main__":
     subparsers = parser.add_subparsers(dest="component", required=True)
 
     # ./netmgmt.py PE1 ifaces ......
-    interface_parser = subparsers.add_parser("interfaces", help="Manage interfaces")
+    interface_parser = subparsers.add_parser("ifaces", help="Manage interfaces")
     interface_parser.add_argument("-i", "--interface",  help="Specify an interface")
     interface_parser.add_argument("-l", "--list", action="store_true", help="Show the interface")
     interface_parser.add_argument("-la", "--list-all", action="store_true", help="Show all the interfaces")
