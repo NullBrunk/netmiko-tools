@@ -1,11 +1,12 @@
+from modules.ui.flexbox import justify_space_between
 from modules.ui.dateui import format_relative_time
 from modules.ui.logger import log
 
-from datetime import datetime, timedelta
 from os.path import abspath, dirname
 from os import makedirs, listdir
 from termcolor import colored
 from time import strftime
+
 
 
 class backupController:
@@ -62,7 +63,6 @@ class backupController:
             date = backup[1].split("-")
             hour = ':'.join(backup[2].split("-")[:2])
 
-            date = f"{self.convertion[int(date[1])-1]} {date[2]}, {date[0]} at {hour}"
+            date_formated = f"{colored(f"{self.convertion[int(date[1])-1]} {date[2]}, {date[0]}", 'cyan')} at {colored(hour, 'cyan')}"
 
-
-            print(date, "    ", path)
+            justify_space_between(date_formated, path)

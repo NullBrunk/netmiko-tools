@@ -72,7 +72,7 @@ def main(args):
             log.error("nothing to do")
 
 
-    log.info(f'Took {colored(date_calculator(start, strftime("%H:%M:%S")), "white", attrs=["bold"])}', start="\n")
+    log.info(f'Took {colored(date_calculator(start, strftime("%H:%M:%S")), "yellow")}', start="\n")
     
     
 if __name__ == "__main__":
