@@ -56,9 +56,10 @@ class backupController:
 
         for router in backed_up_routers:
             log.presentation(router, "")
-            backup.sort()
+            backups = backed_up_routers[backup]
+            backups.sort()
 
-            for backup in router:
+            for backup in backups:
                 path = abspath(dirname(__file__) + "/../../backups/") + "/" + backup
 
                 backup = backup.split("_")
