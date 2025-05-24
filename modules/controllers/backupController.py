@@ -4,7 +4,7 @@ from modules.ui.logger import log
 from datetime import datetime, timedelta
 from os.path import abspath, dirname
 from os import makedirs, listdir
-
+from termcolor import colored
 from time import strftime
 
 
@@ -53,11 +53,9 @@ class backupController:
                 my_backups.append(backup)
 
         my_backups.sort()
-        log.presentation(self.hostname, f"last backup: {format_relative_time(my_backups[0])}")
+        log.presentation(self.hostname, colored(f"last backup: {format_relative_time(my_backups[0])}\n", "white"))
 
         for backup in my_backups:
-            print()
-
             path = abspath(dirname(__file__) + "/../../backups/") + "/" + backup
 
             backup = backup.split("_")

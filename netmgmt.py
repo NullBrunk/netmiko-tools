@@ -67,7 +67,7 @@ def main(args):
         if(args.make):
             ui_backup.show(bc.make())
         elif(args.list_all):
-            ui_backup.show(bc.list_backups())
+            print(bc.list_backups())
         else:
             log.error("nothing to do")
 
