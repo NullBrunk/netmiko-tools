@@ -65,7 +65,7 @@ def main(args):
         bc = backupController(hostname=hostname, session=session)
 
         if(args.make):
-            ui_backup.show(bc.make())
+            bc.make()
         elif(args.list_all):
             bc.list_backups()
         else:
